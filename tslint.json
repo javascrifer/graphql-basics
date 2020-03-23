@@ -9,10 +9,10 @@
     "arrow-parens": [true, "ban-single-arg-parens"],
     "no-duplicate-imports": true,
     "ordered-imports": true,
-    "no-any": true,
+    "no-any": false,
     "one-variable-per-declaration": true,
     "no-shadowed-variable": true,
-    "object-literal-sort-keys": true,
-    "object-literal-key-quotes": true
+    "object-literal-sort-keys": false,
+    "object-literal-key-quotes": false
   }
 }
