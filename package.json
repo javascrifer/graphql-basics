@@ -1,0 +1,20 @@
+{
+  "name": "graphql-basics",
+  "version": "1.0.0",
+  "description": "GraphQL basics course project",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsnd --respawn src/index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^13.9.3",
+    "prettier": "^2.0.1",
+    "ts-node": "^8.8.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^6.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.3"
+  }
+}
