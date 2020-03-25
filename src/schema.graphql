@@ -23,6 +23,7 @@ type Post {
   title: String!
   body: String!
   author: User!
+  comments: [Comment!]!
 }
 
 type Comment {
