@@ -9,6 +9,7 @@ type Query {
 type Mutation {
   createUser(name: String!, email: String!, age: Int): User!
   createPost(title: String!, body: String!, authorId: ID!): Post!
+  createComment(text: String!, postId: String!, authorId: ID!): Comment!
 }
 
 type User {
