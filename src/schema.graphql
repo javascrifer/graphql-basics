@@ -10,6 +10,9 @@ type Mutation {
   createUser(name: String!, email: String!, age: Int): User!
   createPost(title: String!, body: String!, authorId: ID!): Post!
   createComment(text: String!, postId: String!, authorId: ID!): Comment!
+  deleteUser(userId: ID!): DeleteResponse!
+  deletePost(postId: ID!): DeleteResponse!
+  deleteComment(commentId: ID!): DeleteResponse!
 }
 
 type User {
@@ -17,6 +20,8 @@ type User {
   name: String!
   email: String!
   age: Int
+  posts: [Post!]!
+  comments: [Comment!]!
 }
 
 type Post {
@@ -32,4 +37,8 @@ type Comment {
   text: String!
   post: Post!
   author: User!
+}
+
+type DeleteResponse {
+  error: String
 }

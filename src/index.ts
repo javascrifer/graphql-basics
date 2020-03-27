@@ -5,6 +5,7 @@ import { Comment } from './resolvers/comment';
 import { Mutation } from './resolvers/mutation';
 import { Post } from './resolvers/post';
 import { Query } from './resolvers/query';
+import { User } from './resolvers/user';
 import { Context } from './types/graphql/context';
 
 const typeDefs = './src/schema.graphql';
@@ -16,6 +17,7 @@ const context: Context = {
 const resolvers = {
   Query,
   Mutation,
+  User,
   Post,
   Comment,
 };
