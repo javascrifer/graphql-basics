@@ -1,5 +1,5 @@
-import { comments, posts, users } from './fixtures/data.json';
-import { Comment, Post, User } from './types/models';
+import { Comment, Post, User } from '../../types/models';
+import { comments, posts, users } from './data';
 
 export interface InMemoryDB {
   users: User[];

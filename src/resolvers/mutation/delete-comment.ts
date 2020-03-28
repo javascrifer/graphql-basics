@@ -7,16 +7,15 @@ type DeleteCommentResolver = Resolver<
   ObjectWithKey<'error'>
 >;
 
-export const deleteComment: DeleteCommentResolver = (
+export const deleteComment: DeleteCommentResolver = async (
   _: unknown,
   { commentId },
-  { db: { comments } },
+  { commentRepository },
 ) => {
-  const hasComment = comments.some(({ id }) => id === commentId);
-  if (!hasComment) {
-    return { error: 'comment not found' };
+  try {
+    await commentRepository.deleteComment(commentId);
+    return { error: null };
+  } catch (error) {
+    return { error: (error as Error).message };
   }
-
-  comments = comments.filter(({ id }) => id !== commentId);
-  return { error: null };
 };

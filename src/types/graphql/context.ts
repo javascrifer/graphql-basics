@@ -1,5 +1,11 @@
-import { InMemoryDB } from '../../database';
+import {
+  CommentRepository,
+  PostRepository,
+  UserRepository,
+} from '../../repository/definitions';
 
 export interface Context {
-  db: InMemoryDB;
+  userRepository: UserRepository;
+  postRepository: PostRepository;
+  commentRepository: CommentRepository;
 }

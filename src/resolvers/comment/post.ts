@@ -6,5 +6,5 @@ type PostResolver = Resolver<Comment, unknown, Post>;
 export const post: PostResolver = (
   { postId }: Comment,
   __: unknown,
-  { db: { posts } },
-) => posts.find(({ id }) => id === postId);
+  { postRepository },
+) => postRepository.findPost(postId);

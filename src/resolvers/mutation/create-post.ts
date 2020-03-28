@@ -1,21 +1,17 @@
-import { v4 as uuid } from 'uuid';
-
 import { Resolver } from '../../types/graphql/resolver';
 import { Post } from '../../types/models';
 
 type CreatePostResolver = Resolver<unknown, Omit<Post, 'id'>, Post>;
 
-export const createPost: CreatePostResolver = (
+export const createPost: CreatePostResolver = async (
   _: unknown,
   args,
-  { db: { posts, users } },
+  { postRepository, userRepository },
 ) => {
-  const authorExists = users.some(({ id }) => id === args.authorId);
-  if (!authorExists) {
+  const author = await userRepository.findUser(args.authorId);
+  if (!author) {
     throw new Error('author not found');
   }
 
-  const post = { ...args, id: uuid() };
-  posts.push(post);
-  return post;
+  return postRepository.createPost({ ...args });
 };

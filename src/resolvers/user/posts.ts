@@ -6,5 +6,5 @@ type PostsResolver = Resolver<User, unknown, Post[]>;
 export const posts: PostsResolver = (
   { id }: User,
   __: unknown,
-  { db: { posts: dbPosts } },
-) => dbPosts.filter(({ authorId }) => authorId === id);
+  { postRepository },
+) => postRepository.getAuthorPosts(id);

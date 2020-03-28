@@ -6,5 +6,5 @@ type CommentsResolver = Resolver<unknown, unknown, Comment[]>;
 export const comments: CommentsResolver = (
   _: unknown,
   __: unknown,
-  { db: { comments: dbComments } },
-) => dbComments;
+  { commentRepository },
+) => commentRepository.getComments();

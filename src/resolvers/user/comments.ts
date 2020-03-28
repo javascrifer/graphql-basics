@@ -6,5 +6,5 @@ type CommentsResolver = Resolver<User, unknown, Comment[]>;
 export const comments: CommentsResolver = (
   { id }: User,
   __: unknown,
-  { db: { comments: dbComments } },
-) => dbComments.filter(({ authorId }) => authorId === id);
+  { commentRepository },
+) => commentRepository.getUserComment(id);

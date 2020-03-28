@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import { Resolver } from '../../types/graphql/resolver';
 import { Comment } from '../../types/models';
 
@@ -10,19 +8,17 @@ type CreateCommentResolver = Resolver<unknown, Args, Comment>;
 export const createComment: CreateCommentResolver = (
   _: unknown,
   args,
-  { db: { comments, posts, users } },
+  { commentRepository, postRepository, userRepository },
 ) => {
-  const authorExists = users.some(({ id }) => id === args.authorId);
-  if (!authorExists) {
+  const author = userRepository.findUser(args.authorId);
+  if (!author) {
     throw new Error('author not found');
   }
 
-  const postExists = posts.some(({ id }) => id === args.postId);
-  if (!postExists) {
+  const post = postRepository.findPost(args.postId);
+  if (!post) {
     throw new Error('post not found');
   }
 
-  const comment = { ...args, id: uuid() };
-  comments.push(comment);
-  return comment;
+  return commentRepository.createComment(args);
 };

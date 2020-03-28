@@ -1,6 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga';
 
-import { inMemoryDB } from './database';
+import * as repositories from './repository/in-memory';
 import { Comment } from './resolvers/comment';
 import { Mutation } from './resolvers/mutation';
 import { Post } from './resolvers/post';
@@ -10,9 +10,7 @@ import { Context } from './types/graphql/context';
 
 const typeDefs = './src/schema.graphql';
 
-const context: Context = {
-  db: inMemoryDB,
-};
+const context: Context = { ...repositories };
 
 const resolvers = {
   Query,

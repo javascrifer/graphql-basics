@@ -6,5 +6,5 @@ type UsersResolver = Resolver<unknown, unknown, User[]>;
 export const users: UsersResolver = (
   _: unknown,
   __: unknown,
-  { db: { users: dbUsers } },
-) => dbUsers;
+  { userRepository },
+) => userRepository.getUsers();

@@ -7,30 +7,19 @@ type DeleteUserResolver = Resolver<
   ObjectWithKey<'error'>
 >;
 
-export const deleteUser: DeleteUserResolver = (
+export const deleteUser: DeleteUserResolver = async (
   _: unknown,
   { userId },
-  { db: { comments, posts, users } },
+  { commentRepository, postRepository, userRepository },
 ) => {
-  const hasUser = users.some(({ id }) => id === userId);
-  if (!hasUser) {
-    return { error: 'user not found' };
+  try {
+    await userRepository.deleteUser(userId);
+    const deletedPostIds = await postRepository.deleteAuthorPosts(userId);
+    await commentRepository.deleteAuthorComments(userId);
+    await commentRepository.deletePostsComments(deletedPostIds);
+
+    return { error: null };
+  } catch (error) {
+    return { error: (error as Error).message };
   }
-  users = users.filter(({ id }) => id !== userId);
-
-  const deletablePostIds = new Set<string>();
-  posts = posts.filter(({ id, authorId }) => {
-    const shouldDelete = authorId === userId;
-    if (shouldDelete) {
-      deletablePostIds.add(id);
-    }
-    return !shouldDelete;
-  });
-
-  comments = comments.filter(
-    ({ postId, authorId }) =>
-      authorId !== userId && !deletablePostIds.has(postId),
-  );
-
-  return { error: null };
 };
