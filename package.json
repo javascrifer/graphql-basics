@@ -10,7 +10,7 @@
     "format": "prettier --write src/**/*.ts && git add src"
   },
   "engines": {
-    "node": "13.11.0"
+    "node": "13.12.0"
   },
   "author": "Nikolajus Lebedenko",
   "license": "MIT",
