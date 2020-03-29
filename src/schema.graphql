@@ -15,6 +15,10 @@ type Mutation {
   deleteComment(commentId: ID!): DeleteResponse!
 }
 
+type Subscription {
+  postCount: Int!
+}
+
 type User {
   id: ID!
   name: String!

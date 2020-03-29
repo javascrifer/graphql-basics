@@ -1,20 +1,35 @@
-import { GraphQLServer } from 'graphql-yoga';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 
-import * as repositories from './repository/in-memory';
+import {
+  commentRepository,
+  newPostRepository,
+  userRepository,
+} from './repository/in-memory';
 import { Comment } from './resolvers/comment';
 import { Mutation } from './resolvers/mutation';
 import { Post } from './resolvers/post';
 import { Query } from './resolvers/query';
+import { Subscription } from './resolvers/subscription';
 import { User } from './resolvers/user';
 import { Context } from './types/graphql/context';
 
 const typeDefs = './src/schema.graphql';
 
-const context: Context = { ...repositories };
+const pubSub = new PubSub();
+
+const postRepository = newPostRepository(pubSub);
+
+const context: Context = {
+  pubSub,
+  userRepository,
+  postRepository,
+  commentRepository,
+};
 
 const resolvers = {
   Query,
   Mutation,
+  Subscription,
   User,
   Post,
   Comment,

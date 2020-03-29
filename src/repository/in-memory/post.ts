@@ -1,10 +1,12 @@
+import { PubSub } from 'graphql-yoga';
 import { v4 as uuid } from 'uuid';
 
+import { subscriptionName } from '../../resolvers/subscription/post-count';
 import { Post } from '../../types/models';
 import { PostRepository } from '../definitions/post';
 import { inMemoryDB, InMemoryDB } from './database';
 
-type NewPostRepository = () => PostRepository;
+type NewPostRepository = (pubSub: PubSub) => PostRepository;
 
 const getPostsFn = (db: InMemoryDB) => {
   return async () => db.posts;
@@ -54,17 +56,36 @@ const getDeleteAuthorPostsFn = (db: InMemoryDB) => {
   };
 };
 
-const newPostRepository: NewPostRepository = () => {
+const publishPostCount = (db: InMemoryDB, pubSub: PubSub) => {
+  const count = db.posts.length;
+  pubSub.publish(subscriptionName, { [subscriptionName]: count });
+};
+
+const postCountPublisher = <T>(
+  fn: (...args: any) => Promise<T>,
+  db: InMemoryDB,
+  pubSub: PubSub,
+) => {
+  return async (...args: any) => {
+    const response = await fn(...args);
+    publishPostCount(db, pubSub);
+    return response;
+  };
+};
+
+export const newPostRepository: NewPostRepository = (pubSub: PubSub) => {
   const db = inMemoryDB;
 
   return {
     getPosts: getPostsFn(db),
     getAuthorPosts: getAuthorPostsFn(db),
     findPost: getFindPostFn(db),
-    createPost: getCreatePostFn(db),
-    deletePost: getDeletePostFn(db),
-    deleteAuthorPosts: getDeleteAuthorPostsFn(db),
+    createPost: postCountPublisher(getCreatePostFn(db), db, pubSub),
+    deletePost: postCountPublisher(getDeletePostFn(db), db, pubSub),
+    deleteAuthorPosts: postCountPublisher(
+      getDeleteAuthorPostsFn(db),
+      db,
+      pubSub,
+    ),
   };
 };
-
-export const postRepository = newPostRepository();
