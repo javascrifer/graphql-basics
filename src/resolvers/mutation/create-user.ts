@@ -3,8 +3,5 @@ import { User } from '../../types/models';
 
 type CreateUserResolver = Resolver<unknown, Omit<User, 'id'>, User>;
 
-export const createUser: CreateUserResolver = (
-  _: unknown,
-  args,
-  { userRepository },
-) => userRepository.createUser(args);
+export const createUser: CreateUserResolver = (_, args, { userRepository }) =>
+  userRepository.createUser(args);

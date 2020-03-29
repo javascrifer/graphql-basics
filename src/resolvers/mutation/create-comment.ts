@@ -6,7 +6,7 @@ type Args = Omit<Comment, 'id'>;
 type CreateCommentResolver = Resolver<unknown, Args, Comment>;
 
 export const createComment: CreateCommentResolver = (
-  _: unknown,
+  _,
   args,
   { commentRepository, postRepository, userRepository },
 ) => {

@@ -4,7 +4,7 @@ import { Post } from '../../types/models';
 type CreatePostResolver = Resolver<unknown, Omit<Post, 'id'>, Post>;
 
 export const createPost: CreatePostResolver = async (
-  _: unknown,
+  _,
   args,
   { postRepository, userRepository },
 ) => {

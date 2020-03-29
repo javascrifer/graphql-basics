@@ -8,7 +8,7 @@ type DeleteCommentResolver = Resolver<
 >;
 
 export const deleteComment: DeleteCommentResolver = async (
-  _: unknown,
+  _,
   { commentId },
   { commentRepository },
 ) => {

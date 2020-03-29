@@ -3,8 +3,5 @@ import { Comment } from '../../types/models';
 
 type CommentsResolver = Resolver<unknown, unknown, Comment[]>;
 
-export const comments: CommentsResolver = (
-  _: unknown,
-  __: unknown,
-  { commentRepository },
-) => commentRepository.getComments();
+export const comments: CommentsResolver = (_, __, { commentRepository }) =>
+  commentRepository.getComments();

@@ -3,8 +3,5 @@ import { Post, User } from '../../types/models';
 
 type AuthorResolver = Resolver<Post, unknown, User>;
 
-export const author: AuthorResolver = (
-  { authorId }: Post,
-  __: unknown,
-  { userRepository },
-) => userRepository.findUser(authorId);
+export const author: AuthorResolver = ({ authorId }, _, { userRepository }) =>
+  userRepository.findUser(authorId);

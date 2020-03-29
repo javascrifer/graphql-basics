@@ -3,8 +3,5 @@ import { Post } from '../../types/models';
 
 type PostsResolver = Resolver<unknown, unknown, Post[]>;
 
-export const posts: PostsResolver = (
-  _: unknown,
-  __: unknown,
-  { postRepository },
-) => postRepository.getPosts();
+export const posts: PostsResolver = (_, __, { postRepository }) =>
+  postRepository.getPosts();

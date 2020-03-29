@@ -8,7 +8,7 @@ type DeletePostResolver = Resolver<
 >;
 
 export const deletePost: DeletePostResolver = async (
-  _: unknown,
+  _,
   { postId },
   { commentRepository, postRepository },
 ) => {

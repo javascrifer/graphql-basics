@@ -8,7 +8,7 @@ type DeleteUserResolver = Resolver<
 >;
 
 export const deleteUser: DeleteUserResolver = async (
-  _: unknown,
+  _,
   { userId },
   { commentRepository, postRepository, userRepository },
 ) => {
