@@ -25,12 +25,12 @@ users, posts and comments.
   npm ci
 ```
 
-- Launch development server
+- Launch development server.
 
 ```bash
   npm run dev
 ```
 
-- Open GraphQL Playground
+- Open GraphQL Playground.
 
 [Link to GraphQL Playground](http://localhost:4000/)
