@@ -9,6 +9,9 @@
     "lint": "tslint -p tsconfig.json -c tslint.json -t stylish --fix",
     "format": "prettier --write src/**/*.ts && git add src"
   },
+  "engines": {
+    "node": "13.11.0"
+  },
   "author": "Nikolajus Lebedenko",
   "license": "MIT",
   "dependencies": {
