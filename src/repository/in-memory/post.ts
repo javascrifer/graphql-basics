@@ -6,23 +6,23 @@ import { inMemoryDB, InMemoryDB } from './database';
 
 type NewPostRepository = () => PostRepository;
 
-const getPostsFn = ({ posts }: InMemoryDB) => {
-  return async () => posts;
+const getPostsFn = (db: InMemoryDB) => {
+  return async () => db.posts;
 };
 
-const getAuthorPostsFn = ({ posts }: InMemoryDB) => {
+const getAuthorPostsFn = (db: InMemoryDB) => {
   return async (authorId: string) =>
-    posts.filter(post => post.authorId === authorId);
+    db.posts.filter(post => post.authorId === authorId);
 };
 
-const getFindPostFn = ({ posts }: InMemoryDB) => {
-  return async (postId: string) => posts.find(({ id }) => id === postId);
+const getFindPostFn = (db: InMemoryDB) => {
+  return async (postId: string) => db.posts.find(({ id }) => id === postId);
 };
 
-const getCreatePostFn = ({ posts }: InMemoryDB) => {
+const getCreatePostFn = (db: InMemoryDB) => {
   return async (args: Omit<Post, 'id'>) => {
     const post = { ...args, id: uuid() };
-    posts.push(post);
+    db.posts.push(post);
     return post;
   };
 };

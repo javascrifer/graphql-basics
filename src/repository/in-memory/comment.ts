@@ -6,24 +6,24 @@ import { inMemoryDB, InMemoryDB } from './database';
 
 type NewCommentRepository = () => CommentRepository;
 
-const getCommentsFn = ({ comments }: InMemoryDB) => {
-  return async () => comments;
+const getCommentsFn = (db: InMemoryDB) => {
+  return async () => db.comments;
 };
 
-const getCommentsByKeyFn = ({ comments }: InMemoryDB, key: keyof Comment) => {
+const getCommentsByKeyFn = (db: InMemoryDB, key: keyof Comment) => {
   return async (value: string) =>
-    comments.filter(comment => comment[key] === value);
+    db.comments.filter(comment => comment[key] === value);
 };
 
-const getFindCommentFn = ({ comments }: InMemoryDB) => {
+const getFindCommentFn = (db: InMemoryDB) => {
   return async (commentId: string) =>
-    comments.find(({ id }) => id === commentId);
+    db.comments.find(({ id }) => id === commentId);
 };
 
-const getCreateCommentFn = ({ comments }: InMemoryDB) => {
+const getCreateCommentFn = (db: InMemoryDB) => {
   return async (args: Omit<Comment, 'id'>) => {
     const comment = { ...args, id: uuid() };
-    comments.push(comment);
+    db.comments.push(comment);
     return comment;
   };
 };

@@ -6,18 +6,18 @@ import { inMemoryDB, InMemoryDB } from './database';
 
 type NewUserRepository = () => UserRepository;
 
-const getUsersFn = ({ users }: InMemoryDB) => {
-  return async () => users;
+const getUsersFn = (db: InMemoryDB) => {
+  return async () => db.users;
 };
 
-const getFindUserFn = ({ users }: InMemoryDB) => {
-  return async (userId: string) => users.find(({ id }) => id === userId);
+const getFindUserFn = (db: InMemoryDB) => {
+  return async (userId: string) => db.users.find(({ id }) => id === userId);
 };
 
-const getCreateUserFn = ({ users }: InMemoryDB) => {
+const getCreateUserFn = (db: InMemoryDB) => {
   return async (args: Omit<User, 'id'>) => {
     const user = { ...args, id: uuid() };
-    users.push(user);
+    db.users.push(user);
     return user;
   };
 };
