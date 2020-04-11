@@ -13,7 +13,7 @@ import { Subscription } from './resolvers/subscription';
 import { User } from './resolvers/user';
 import { Context } from './types/graphql/context';
 
-const typeDefs = './src/schema.graphql';
+const typeDefs = process.env.TYPE_DEFS || './src/schema.graphql';
 
 const pubSub = new PubSub();
 
@@ -36,6 +36,9 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({ typeDefs, resolvers, context });
+const startOptions = { port: process.env.PORT || 4000 };
 
-// tslint:disable-next-line: no-console
-server.start(() => console.log('Server is running on localhost:4000'));
+server.start(startOptions, () => {
+  // tslint:disable-next-line: no-console
+  console.log('Server is running on localhost:4000');
+});

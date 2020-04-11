@@ -5,9 +5,15 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
+    "build:docker": "npm run build && npm run docker:build",
     "dev": "tsnd --respawn src/index.ts",
+    "start:docker": "npm run docker:clean && npm run docker:start",
     "lint": "tslint -p tsconfig.json -c tslint.json -t stylish --fix",
-    "format": "prettier --write src/**/*.ts && git add src"
+    "format": "prettier --write src/**/*.ts && git add src",
+    "docker:build": "docker build -t nikasdocker/graphql-basics .",
+    "docker:start": "docker container run -d -p 4000:80 --name graphql-basics nikasdocker/graphql-basics",
+    "docker:clean": "docker container rm -f graphql-basics",
+    "docker:logs": "docker container logs -f graphql-basics"
   },
   "engines": {
     "node": "13.12.0"
