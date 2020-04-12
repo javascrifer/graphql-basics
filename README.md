@@ -34,3 +34,19 @@ users, posts and comments.
 - Open GraphQL Playground.
 
 [Link to GraphQL Playground](http://localhost:4000/)
+
+## Building
+
+This project supports docker image building. To build an image from a project
+source code simply run:
+
+```bash
+  npm run build:docker
+```
+
+Afterwards you can run GraphQL server using docker by running the following
+command:
+
+```bash
+  npm run start:docker
+```
